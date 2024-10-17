@@ -151,8 +151,8 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
     <>
       <Navbar variant="dark" expand="lg" fixed="top" style={navbarStyle}>
         <div className="container mt-1" style={{ marginBottom: "0px" }}>
-          <Navbar.Brand onClick={() => navigate('/')} className="text-dark" style={{ cursor: 'pointer' }}>
-            <img src="/images/logo.jpg" alt="" style={{ height: '55px', marginRight: '10px', borderRadius: '50%', marginTop: '0px' }} />
+          <Navbar.Brand onClick={() => navigate('/Saaral_Jwellery_FE')} className="text-dark" style={{ cursor: 'pointer' }}>
+            <img src="images/logo.png" alt="loading" style={{ height: '55px', marginRight: '10px', borderRadius: '50%', marginTop: '0px' }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -174,7 +174,7 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
                 </NavDropdown>
               ))}
               {/* Other nav links (home, about, etc.) remain unchanged */}
-              <Nav.Link href="#home" className="text-dark me-3" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+              <Nav.Link className="text-dark me-3" onClick={() => navigate('/Saaral_Jwellery_FE')} style={{ cursor: 'pointer' }}>
                 <i className="fas fa-home" style={{ color: tealColor }}></i>
               </Nav.Link>
               <Nav.Link href="#collection" className="text-dark me-3" onClick={() => navigate('#collection')} style={{ cursor: 'pointer' }}>

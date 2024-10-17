@@ -157,7 +157,7 @@ function App() {
       <Router>
         <CustomNavbar setCartItems={setCartItems} setCartCount={setCartCount} cartItems={cartItems} cartCount={cartCount} userId={userId} />
         <Routes>
-          <Route path="/" element={<JewelryShop />} />
+          <Route path="/Saaral_Jwellery_FE" element={<JewelryShop />} />
           <Route path="/jewelry/:category/:subcategory?" element={<CategoryPage addToCart={addToCart} cartCount={cartCount} />} />
           <Route path="/category/:category" element={<ProductsPage />} />
           <Route path="/product/:productId" element={<ProductDetailPage userId={userId} addToCart={addToCart} cartCount={cartCount} />} />
