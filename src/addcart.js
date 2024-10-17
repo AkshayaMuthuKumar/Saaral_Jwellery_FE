@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button, ListGroup, Card } from 'react-bootstrap';
 import API_URL from './config';
-
+//Oct17
 export default function Cart({ cartItems, cartCount, removeFromCart }) {
   const totalPrice = cartItems.reduce((total, item) => {
     const price = Number(item.price) || 0;
