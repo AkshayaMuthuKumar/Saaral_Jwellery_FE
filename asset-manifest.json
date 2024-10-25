@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Saaral_Jwellery_FE/static/css/main.fb754d20.css",
-    "main.js": "/Saaral_Jwellery_FE/static/js/main.cac8e64f.js",
+    "main.js": "/Saaral_Jwellery_FE/static/js/main.19f6e8ab.js",
     "static/media/fa-solid-900.ttf": "/Saaral_Jwellery_FE/static/media/fa-solid-900.07ed6d5fa32c1d54af0f.ttf",
     "static/media/fa-brands-400.ttf": "/Saaral_Jwellery_FE/static/media/fa-brands-400.0ff70dcbf135d859ebf3.ttf",
     "static/media/fa-solid-900.woff2": "/Saaral_Jwellery_FE/static/media/fa-solid-900.93f719f4d62bfa3e748c.woff2",
@@ -16,10 +16,10 @@
     "static/media/slick.woff": "/Saaral_Jwellery_FE/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/Saaral_Jwellery_FE/index.html",
     "main.fb754d20.css.map": "/Saaral_Jwellery_FE/static/css/main.fb754d20.css.map",
-    "main.cac8e64f.js.map": "/Saaral_Jwellery_FE/static/js/main.cac8e64f.js.map"
+    "main.19f6e8ab.js.map": "/Saaral_Jwellery_FE/static/js/main.19f6e8ab.js.map"
   },
   "entrypoints": [
     "static/css/main.fb754d20.css",
-    "static/js/main.cac8e64f.js"
+    "static/js/main.19f6e8ab.js"
   ]
 }
