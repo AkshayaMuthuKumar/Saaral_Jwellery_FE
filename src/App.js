@@ -54,7 +54,6 @@ function App() {
   }, [userId]);
 
   const addToCart = async (item, selectedSize, quantity = 1) => {
-    console.log("item", item)
     if (!userId) {
       alert('Please log in to add items to the cart.');
       return;

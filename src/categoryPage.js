@@ -21,7 +21,6 @@ const CategoryPage = ({ addToCart, cartCount }) => {
     const fetchProducts = async () => {
       try {
         let apiUrl = `${API_URL}/products/category/${category}?page=${currentPage}&limit=${itemsPerPage}&priceRange=${selectedPriceRange}`;
-        console.log("subcategory", subcategory)
         if (subcategory) {
           apiUrl = `${API_URL}/products/category/${category}/subcategory/${subcategory}?page=${currentPage}&limit=${itemsPerPage}&priceRange=${selectedPriceRange}`;
         }

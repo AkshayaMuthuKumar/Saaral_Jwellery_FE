@@ -27,7 +27,6 @@ const ProductsPage = ({ addToCart, cartCount }) => {
 
         const response = await fetch(apiUrl);
         const data = await response.json();
-        console.log("data", data);
         setProducts(data.products);
         setTotalPages(data.totalPages);
       } catch (error) {
@@ -39,9 +38,7 @@ const ProductsPage = ({ addToCart, cartCount }) => {
   }, [category, currentPage, selectedPriceRange, selectedSize]);
 
   const handleAddToCart = (product) => {
-    console.log("Product:", product);
     addToCart(product);
-    console.log(`Product ${product.product_id} added to cart`);
   };
 
   const handlePriceFilterChange = (range) => {

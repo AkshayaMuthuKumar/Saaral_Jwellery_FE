@@ -67,10 +67,6 @@ const Sidebar = ({ onPriceFilterChange, onSizeFilterChange, onOccasionFilterChan
     fetchOccasions();
   }, []);
 
-  console.log("****", categories);
-  console.log("******", categoryCounts)
-
-
   const handlePriceFilterChange = (range) => {
     setActiveFilter(range);
     onPriceFilterChange(range);

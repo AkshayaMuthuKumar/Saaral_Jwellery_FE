@@ -24,6 +24,7 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
   };
 
   useEffect(() => {
+    // Fetch categories and other initial data
     const fetchCategories = async () => {
       try {
         const response = await axios.get(`${API_URL}/products/categories`);
@@ -32,43 +33,39 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
         console.error('Error fetching categories:', error);
       }
     };
-
     fetchCategories();
-
+  
+    // Retrieve user and isAdmin from local storage
     const storedUserName = localStorage.getItem('userName');
-    if (storedUserName) {
-      setUserName(storedUserName);
-    }
-
-    // Load cart items from localStorage on component mount
+    const storedIsAdmin = Number(localStorage.getItem('isAdmin')); // Convert to number
+  
+    if (storedUserName) setUserName(storedUserName);
+    if (storedIsAdmin) setIsAdmin(storedIsAdmin);
+  
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
     if (storedCartItems) {
       setCartItems(storedCartItems);
-      setCartCount(storedCartItems.reduce((count, item) => count + item.quantity, 0)); // Set cart count based on quantities
+      setCartCount(storedCartItems.reduce((count, item) => count + item.quantity, 0));
     }
   }, [userId, setCartItems, setCartCount]);
-
-  console.log("cartitems", cartCount)
+  
 
   const handleLogin = async () => {
     try {
       const response = await axios.post(`${API_URL}/auth/login`, loginData);
       setUserName(response.data.userName);
-      localStorage.setItem('userId', response.data.userId);
-      localStorage.setItem('userName', response.data.userName);
-      localStorage.setItem('isAdmin', response.data.isAdmin);
-
-      setShowLoginModal(false);
       setIsAdmin(response.data.isAdmin);
+      localStorage.setItem('userName', response.data.userName);
+      localStorage.setItem('isAdmin', response.data.isAdmin.toString()); // Store as string
+  
+      setShowLoginModal(false);
       window.location.reload();
-
-      // No need to fetch cart items here since it's handled in App.js
-
     } catch (error) {
       console.error('Login error:', error.response ? error.response.data : error.message);
       alert('Login failed');
     }
   };
+  
 
 
 
@@ -84,7 +81,7 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
     // Reset cart and other data
     setCartItems([]); // Clear the cart items in state
     setCartCount(0); // Reset the cart count to 0
-    window.location.href = '/'; // Redirect to home
+    window.location.href = '/Saaral_Jwellery_FE'; // Redirect to home
     alert('Logged out successfully');
   };
 
@@ -106,6 +103,7 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
   };
 
   const handleSubcategoryClick = (category, subcategory) => {
+
     navigate(`/jewelry/${category.toLowerCase()}/${subcategory.toLowerCase()}`);
   };
 
@@ -152,7 +150,7 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
       <Navbar variant="dark" expand="lg" fixed="top" style={navbarStyle}>
         <div className="container mt-1" style={{ marginBottom: "0px" }}>
           <Navbar.Brand onClick={() => navigate('/Saaral_Jwellery_FE')} className="text-dark" style={{ cursor: 'pointer' }}>
-            <img src="images/logo.png" alt="loading" style={{ height: '55px', marginRight: '10px', borderRadius: '50%', marginTop: '0px' }} />
+            <img src="images/logo.jpg" alt="loading" style={{ height: '55px', marginRight: '10px', borderRadius: '50%', marginTop: '0px' }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -195,7 +193,7 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
 
                 </Nav.Link>
               </OverlayTrigger>
-              {isAdmin === 1 && (
+              {isAdmin == 1 && (
                 <Nav.Link href="#toAdd" className="text-dark me-3" onClick={() => navigate('/toAdd')} style={{ cursor: 'pointer' }}>
                   <i className="fas fa-add" style={{ color: tealColor }}></i>
                 </Nav.Link>

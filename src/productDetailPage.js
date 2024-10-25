@@ -23,8 +23,6 @@ const ProductDetailPage = ({ addToCart, cartCount }) => {
       try {
         const response = await fetch(`${API_URL}/products/product/${productId}`);
         const data = await response.json();
-        console.log("data", data)
-
         if (data && typeof data.price === 'string') {
           data.price = parseFloat(data.price);
         }
@@ -41,7 +39,6 @@ const ProductDetailPage = ({ addToCart, cartCount }) => {
   if (!product) {
     return <div>Loading...</div>;
   }
-  console.log("product", product)
   const handleAddToCart = () => {
     if (product.size && product.size.length > 0 && !selectedSize) {
       alert('Please select a size before adding to the cart.');

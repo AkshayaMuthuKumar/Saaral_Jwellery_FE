@@ -160,8 +160,6 @@ export default function JewelryShop() {
     ],
   };
 
-  console.log("categories", categories)
-
   const handleVideoPlay = () => {
     const video = videoRef.current;
     if (video) {
