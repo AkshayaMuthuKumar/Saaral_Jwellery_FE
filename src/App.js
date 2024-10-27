@@ -5,6 +5,8 @@ import CategoryPage from './categoryPage';
 import ProductsPage from './productsPage';
 import ProductDetailPage from './productDetailPage';
 import CustomNavbar from './navbar';
+import ScheduleCallButton from './ScheduleCallButton';
+import FloatingWhatsAppButton from './FloatingWhatsAppButton';
 import axios from 'axios';
 import Cart from './addcart';
 import './style.css'; 
@@ -163,6 +165,10 @@ function App() {
           <Route path="/cart" element={<Cart cartItems={cartItems} cartCount={cartCount} removeFromCart={removeFromCart} />} />
           <Route path="/toAdd" element={<AddProductForm />} />
         </Routes>
+        <div className="button-container">
+          <ScheduleCallButton /> {/* Popin buttons for video call and scheduling */}
+          <FloatingWhatsAppButton /> {/* Add the floating button component */}
+        </div>
       </Router>
     </div>
   );

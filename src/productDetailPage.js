@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FaShoppingCart, FaStar } from 'react-icons/fa';
+import { FaShoppingCart, FaStar, FaDollarSign, FaShippingFast } from 'react-icons/fa';
 import axios from 'axios';
 import API_URL from './config';
 
@@ -23,6 +23,8 @@ const ProductDetailPage = ({ addToCart, cartCount }) => {
       try {
         const response = await fetch(`${API_URL}/products/product/${productId}`);
         const data = await response.json();
+        console.log("data", data)
+
         if (data && typeof data.price === 'string') {
           data.price = parseFloat(data.price);
         }
@@ -39,6 +41,7 @@ const ProductDetailPage = ({ addToCart, cartCount }) => {
   if (!product) {
     return <div>Loading...</div>;
   }
+  console.log("product", product)
   const handleAddToCart = () => {
     if (product.size && product.size.length > 0 && !selectedSize) {
       alert('Please select a size before adding to the cart.');
@@ -106,7 +109,13 @@ const ProductDetailPage = ({ addToCart, cartCount }) => {
         <div className="col-md-6 mt-5">
           <h2 className="text-primary">{product.name}</h2>
           <h4 className="text-danger">Rs.{product.price.toFixed(2)}</h4>
-          <div className="stars">{'⭐'.repeat(5)}</div>
+          <div className="d-flex align-items-center mt-2">
+            <FaDollarSign className="me-2 mb-4" color="green" />
+            <h6 className="mb-4">Tax included, </h6>
+            <FaShippingFast className="mx-2 mb-4" color="blue" />
+            <h6 className="mb-4">Shipping calculated at checkout</h6>
+          </div>
+        <div className="stars">{'⭐'.repeat(5)}</div>
           <p className="mt-3">No product description available.</p>
           <h6>Available: <span className={`text-${product.stock > 0 ? 'success' : 'danger'}`}>{product.stock > 0 ? 'In Stock' : 'Out of Stock'}</span></h6>
 
