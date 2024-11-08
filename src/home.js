@@ -338,9 +338,7 @@ export default function JewelryShop() {
           <a href="https://www.instagram.com/saaral_jewellery/" className="text-white mx-2" aria-label="Instagram">
             <i className="fab fa-instagram" style={{ color: 'white' }}></i>
           </a>
-          <a href="https://twitter.com" className="text-white mx-2" aria-label="Twitter">
-            <i className="fab fa-twitter" style={{ color: 'white' }}></i>
-          </a>
+        
         </div>
       </footer>
     </div>

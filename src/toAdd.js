@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import API_URL from './config';
@@ -65,7 +65,15 @@ const AddProductForm = () => {
   };
 
   const handleSubCategoryImageChange = (e) => {
-    setNewSubCategoryImage(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      if (file.type.startsWith('image/')) {
+        setNewSubCategoryImage(file);  // Set the image file to state
+      } else {
+        alert("Please select an image file.");
+        e.target.value = '';  // Clear the input if the file is not an image
+      }
+    }
   };
 
   const handleImageChange = (e) => {
@@ -120,23 +128,28 @@ const AddProductForm = () => {
 
   const handleAddCategory = async (e) => {
     e.preventDefault();
-
+  
+    // Check if category and subcategory names are provided
     if (!newCategory || !newSubCategory) {
       alert("Category and Subcategory names are required.");
       return;
     }
-
+  
     const formData = new FormData();
     formData.append("category_name", newCategory);
     formData.append("subcategory_name", newSubCategory);
-
+  
+    // Ensure that the image is only added if it's selected
     if (newSubCategoryImage) {
       formData.append("image", newSubCategoryImage); // Attach the subcategory image
+    } else {
+      alert("Please select an image.");
+      return;
     }
-
+  
     try {
       const response = await axios.post(
-        `${API_URL}/products/category`,
+        `${API_URL}/products/category`, // Make sure this endpoint is correct
         formData,
         {
           headers: {
@@ -144,8 +157,9 @@ const AddProductForm = () => {
           },
         }
       );
-      alert(response.data.message);
-
+  
+      alert(response.data.message); // Alert the user with the server response message
+  
       // Update the state with the new category and subcategory
       setCategories((prev) => [
         ...prev,
@@ -155,16 +169,19 @@ const AddProductForm = () => {
           subcategories: [newSubCategory],
         },
       ]);
-
+  
       // Reset the input fields and image
       setNewCategory("");
       setNewSubCategory("");
-      setNewSubCategoryImage(null);
+      setNewSubCategoryImage(null); // Clear the selected image file
+      window.location.reload(); // Reloads the page after toggle
 
     } catch (error) {
+      // Provide a more detailed error message to the user
       alert(error.response?.data?.message || "Error adding category.");
     }
   };
+  
 
 
 
@@ -243,6 +260,7 @@ const AddProductForm = () => {
     }
   };
 
+  const fileInputRef = useRef(null);
 
 
   return (
@@ -265,20 +283,14 @@ const AddProductForm = () => {
 
           <div className="form-group mb-3">
             <label>Category</label>
-            <select
-              name="category"
-              className="form-control"
-              value={product.category}
-              onChange={handleCategorySelect}
-              required
-            >
-              <option value="">Select category</option>
-              {categories.map((cat) => (
-                <option key={cat.category_name} value={cat.category_name}>
-                  {cat.category_name}
-                </option>
-              ))}
-            </select>
+            <select name="category" className="form-control" value={product.category} onChange={handleCategorySelect} required>
+  <option value="">Select category</option>
+  {categories.map((cat) => (
+    <option key={cat.id || cat.category_name} value={cat.category_name}>
+      {cat.category_name}
+    </option>
+  ))}
+</select>
           </div>
 
           <div className="form-group mb-3">
@@ -293,12 +305,12 @@ const AddProductForm = () => {
             >
               <option value="">Select Subcategory</option>
               {categories
-                .find(cat => cat.category_name === selectedCategory)?.subcategories
-                .map((subcat, index) => (
-                  <option key={index} value={subcat}>
-                    {subcat}
-                  </option>
-                ))}
+  .find((cat) => cat.category_name === selectedCategory)?.subcategories
+  .map((subcat, index) => (
+    <option key={`${selectedCategory}-${index}`} value={subcat}>
+      {subcat}
+    </option>
+))}
             </select>
           </div>
 
@@ -342,20 +354,14 @@ const AddProductForm = () => {
 
           <div className="form-group mb-3">
             <label>Occasion</label>
-            <select
-              name="occasion"
-              className="form-control"
-              value={product.occasion}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select occasion</option>
-              {occasions.map((occ) => (
-                <option key={occ.id} value={occ.name}>
-                  {occ.name}
-                </option>
-              ))}
-            </select>
+            <select name="occasion" className="form-control" value={product.occasion} onChange={handleChange} required>
+  <option value="">Select occasion</option>
+  {occasions.map((occ) => (
+    <option key={occ.id} value={occ.name}>
+      {occ.name}
+    </option>
+  ))}
+</select>
           </div>
 
           <div className="form-group mb-3">
@@ -387,10 +393,10 @@ const AddProductForm = () => {
               placeholder="Enter new category name"
             />
             <datalist id="categorySuggestions">
-              {categorySuggestions.map((suggestion, index) => (
-                <option key={index} value={suggestion} />
-              ))}
-            </datalist>
+  {categorySuggestions.map((suggestion, index) => (
+    <option key={suggestion || index} value={suggestion} />
+  ))}
+</datalist>
           </div>
 
           <div className="form-group mb-3">
@@ -417,6 +423,8 @@ const AddProductForm = () => {
               name="image"
               className="form-control"
               onChange={handleSubCategoryImageChange}
+              accept="image/*"  // Restrict file type to images
+              ref={fileInputRef} // Attach the ref to the input element
               required
             />
           </div>

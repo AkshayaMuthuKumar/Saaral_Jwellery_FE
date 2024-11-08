@@ -148,80 +148,112 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
   return (
     <>
       <Navbar variant="dark" expand="lg" fixed="top" style={navbarStyle}>
-        <div className="container mt-1" style={{ marginBottom: "0px" }}>
-          <Navbar.Brand onClick={() => navigate('/Saaral_Jwellery_FE')} className="text-dark" style={{ cursor: 'pointer' }}>
-            <img src="images/logo.jpg" alt="loading" style={{ height: '55px', marginRight: '10px', borderRadius: '50%', marginTop: '0px' }} />
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto mt-2">
-              {categories.map(category => (
-                <NavDropdown
-                  key={category.category_name}
-                  title={<span style={{ color: '#000', fontSize: '16px' }}>{category.category_name}</span>}
-                  id={`${category.category_name}-dropdown`}
-                  className="me-3"
-                >
-                  <NavDropdown.Item style={{ textAlign: 'center', fontWeight: 'bold' }}>Jewels</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  {category.subcategories.map(subcategory => (
-                    <NavDropdown.Item key={subcategory} onClick={() => handleSubcategoryClick(category.category_name, subcategory)}>
-                      {subcategory}
-                    </NavDropdown.Item>
-                  ))}
-                </NavDropdown>
-              ))}
-              {/* Other nav links (home, about, etc.) remain unchanged */}
-              <Nav.Link className="text-dark me-3" onClick={() => navigate('/Saaral_Jwellery_FE')} style={{ cursor: 'pointer' }}>
-                <i className="fas fa-home" style={{ color: tealColor }}></i>
-              </Nav.Link>
-              <Nav.Link href="#collection" className="text-dark me-3" onClick={() => navigate('#collection')} style={{ cursor: 'pointer' }}>
-                <i className="fas fa-gem" style={{ color: tealColor }}></i>
-              </Nav.Link>
-              <Nav.Link href="#about" className="text-dark me-3" onClick={() => navigate('#about')} style={{ cursor: 'pointer' }}>
-                <i className="fas fa-info-circle" style={{ color: tealColor }}></i>
-              </Nav.Link>
-              <Nav.Link href="#testimonials" className="text-dark me-3" onClick={() => navigate('#testimonials')} style={{ cursor: 'pointer' }}>
-                <i className="fas fa-comment" style={{ color: tealColor }}></i>
-              </Nav.Link>
-              <OverlayTrigger placement="bottom" overlay={renderTooltip}>
-                <Nav.Link onClick={() => navigate('/cart')} className="text-dark" style={{ position: 'relative', cursor: 'pointer' }}>
-                  <i className="fas fa-shopping-cart" style={{ color: tealColor }}></i>
-                  <Badge pill bg="danger" style={{ position: 'absolute', top: '0px', right: '0px' }}>
-                    {cartCount > 0 ? cartCount : 0}
-                  </Badge>
+  <div className="container mt-1" style={{ marginBottom: "0px" }}>
+    <Navbar.Brand onClick={() => navigate('/Saaral_Jwellery_FE')} className="text-dark" style={{ cursor: 'pointer' }}>
+      <img src="images/logo.jpg" alt="loading" style={{ height: '55px', marginRight: '10px', borderRadius: '50%', marginTop: '0px' }} />
+    </Navbar.Brand>
+    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="ms-auto mt-2">
+        {categories.map(category => (
+          <NavDropdown
+            key={category.category_name}
+            title={<span style={{ color: '#000', fontSize: '16px' }}>{category.category_name}</span>}
+            id={`${category.category_name}-dropdown`}
+            className="me-3"
+          >
+            <NavDropdown.Item style={{ textAlign: 'center', fontWeight: 'bold' }}>Jewels</NavDropdown.Item>
+            <NavDropdown.Divider />
+            {category.subcategories.map(subcategory => (
+              <NavDropdown.Item key={subcategory} onClick={() => handleSubcategoryClick(category.category_name, subcategory)}>
+                {subcategory}
+              </NavDropdown.Item>
+            ))}
+          </NavDropdown>
+        ))}
+        {/* Home icon with label */}
+        <Nav.Link className="text-dark me-3" onClick={() => navigate('/Saaral_Jwellery_FE')} style={{ cursor: 'pointer' }}>
+          <div className="nav-icon-label">
+            <i className="fas fa-home" style={{ color: tealColor }}></i>
+            <div className="label">Home</div>
+          </div>
+        </Nav.Link>
+        {/* Collection icon with label */}
+        <Nav.Link href="#collection" className="text-dark me-3" onClick={() => navigate('#collection')} style={{ cursor: 'pointer' }}>
+          <div className="nav-icon-label">
+            <i className="fas fa-gem" style={{ color: tealColor }}></i>
+            <div className="label">Collection</div>
+          </div>
+        </Nav.Link>
+        {/* About icon with label */}
+        <Nav.Link href="#about" className="text-dark me-3" onClick={() => navigate('#about')} style={{ cursor: 'pointer' }}>
+          <div className="nav-icon-label">
+            <i className="fas fa-info-circle" style={{ color: tealColor }}></i>
+            <div className="label">About</div>
+          </div>
+        </Nav.Link>
+        {/* Testimonials icon with label */}
+        <Nav.Link href="#testimonials" className="text-dark me-3" onClick={() => navigate('#testimonials')} style={{ cursor: 'pointer' }}>
+          <div className="nav-icon-label">
+            <i className="fas fa-comment" style={{ color: tealColor }}></i>
+            <div className="label">Testimonials</div>
+          </div>
+        </Nav.Link>
+        {/* Cart icon with label */}
+        <OverlayTrigger placement="bottom" overlay={renderTooltip}>
+          <Nav.Link onClick={() => navigate('/cart')} className="text-dark" style={{ position: 'relative', cursor: 'pointer' }}>
+            <div className="nav-icon-label">
+              <i className="fas fa-shopping-cart" style={{ color: tealColor }}></i>
+              <div className="label">Cart</div>
+            </div>
+            <Badge pill bg="danger" style={{ position: 'absolute', top: '0px', right: '0px' }}>
+              {cartCount > 0 ? cartCount : 0}
+            </Badge>
+          </Nav.Link>
+        </OverlayTrigger>
+        {/* Conditional admin icon with label */}
+        {isAdmin == 1 && (
+          <Nav.Link href="#toAdd" className="text-dark me-3" onClick={() => navigate('/toAdd')} style={{ cursor: 'pointer' }}>
+            <div className="nav-icon-label">
+              <i className="fas fa-add" style={{ color: tealColor }}></i>
+              <div className="label">Add</div>
+            </div>
+          </Nav.Link>
+        )}
+        {/* Login/Logout based on user status */}
+        {userName ? (
+          <>
+            <Nav.Link className="text-dark me-1" style={{ cursor: 'pointer' }}>
+              Welcome, {userName}!
+            </Nav.Link>
+            <Nav.Link className="text-dark me-3" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+              <div className="nav-icon-label">
+                <i className="fas fa-sign-out-alt" style={{ color: tealColor }}></i>
+                <div className="label">Logout</div>
+              </div>
+            </Nav.Link>
+          </>
+        ) : (
+          <>
+            <Nav.Link className="text-dark me-3" onClick={() => setShowLoginModal(true)} style={{ cursor: 'pointer' }}>
+              <div className="nav-icon-label">
+                <i className="fas fa-sign-in-alt" style={{ color: tealColor }}></i>
+                <div className="label">Login</div>
+              </div>
+            </Nav.Link>
+            <Nav.Link className="text-dark me-3" onClick={() => setShowSignupModal(true)} style={{ cursor: 'pointer' }}>
+              <div className="nav-icon-label">
+                <i className="fas fa-user-plus" style={{ color: tealColor }}></i>
+                <div className="label">Signup</div>
+              </div>
+            </Nav.Link>
+          </>
+        )}
+      </Nav>
+    </Navbar.Collapse>
+  </div>
+</Navbar>
 
-                </Nav.Link>
-              </OverlayTrigger>
-              {isAdmin == 1 && (
-                <Nav.Link href="#toAdd" className="text-dark me-3" onClick={() => navigate('/toAdd')} style={{ cursor: 'pointer' }}>
-                  <i className="fas fa-add" style={{ color: tealColor }}></i>
-                </Nav.Link>
-              )}
-
-              {userName ? (
-                <>
-                  <Nav.Link className="text-dark me-1" style={{ cursor: 'pointer' }}>
-                    Welcome, {userName}!
-                  </Nav.Link>
-                  <Nav.Link className="text-dark me-3" onClick={handleLogout} style={{ cursor: 'pointer' }}>
-                    <i className="fas fa-sign-out-alt" style={{ color: tealColor }}></i>
-                  </Nav.Link>
-                </>
-              ) : (
-                <>
-                  <Nav.Link className="text-dark me-3" onClick={() => setShowLoginModal(true)} style={{ cursor: 'pointer' }}>
-                    <i className="fas fa-sign-in-alt" style={{ color: tealColor }}></i>
-                  </Nav.Link>
-                  <Nav.Link className="text-dark me-3" onClick={() => setShowSignupModal(true)} style={{ cursor: 'pointer' }}>
-                    <i className="fas fa-user-plus" style={{ color: tealColor }}></i>
-                  </Nav.Link>
-                </>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </div>
-      </Navbar>
 
       {/* Login Modal */}
       <Modal show={showLoginModal} onHide={() => setShowLoginModal(false)}>

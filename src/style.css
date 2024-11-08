@@ -94,8 +94,21 @@ footer {
   z-index: 1000; /* Ensure it appears above other content */
 }
 
+/* style.css */
+
+.button-container {
+  display: flex; /* Enable flexbox layout */
+  justify-content: space-between; /* Space between buttons */
+  position: fixed; /* Fix position to viewport */
+  bottom: 20px; /* Distance from the bottom */
+  left: 20px; /* Start from the left side */
+  right: 20px; /* End on the right side */
+  align-items: center; /* Center items vertically */
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
 .schedule-call-button {
-  background-color: #22088c; /* WhatsApp green */
+  background-color: #4825d3; /* WhatsApp green */
   color: white;
   padding: 10px 20px;
   border: none;
@@ -112,8 +125,52 @@ footer {
   background-color: #128C7E; /* Darker green on hover */
 }
 
-/* Styles for FloatingWhatsAppButton can go here if needed */
-/* FloatingWhatsAppButton.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.schedule-link {
+  display: inline-block;
+  margin-top: 15px;
+  background-color: #25D366; /* Match the button color */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.schedule-link:hover {
+  background-color: #128C7E; /* Darker green on hover */
+}
+
+
 .whatsapp-button {
   position: fixed;
   bottom: 20px;
@@ -137,4 +194,16 @@ footer {
 }
 .whatsapp-button:hover {
   background-color: #1DA851;
+}
+
+.nav-icon-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-icon-label .label {
+  font-size: 12px;
+  color: #000;
+  margin-top: 3px;
 }
