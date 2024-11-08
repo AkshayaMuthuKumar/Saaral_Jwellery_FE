@@ -13,13 +13,13 @@ const FloatingWhatsAppButton = () => {
 
   return (
     <div className="whatsapp-button" onClick={handleClick}>
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
-        alt="WhatsApp"
-        className="whatsapp-icon"
-      />
-      Chat with us
-    </div>
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+      alt="WhatsApp"
+      className="whatsapp-icon"
+    />
+    <span className="text">Chat with us</span>
+  </div>
   );
 };
 

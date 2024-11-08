@@ -15,10 +15,10 @@ const ScheduleCallButton = () => {
 
   return (
     <>
-      <div className="schedule-call-button" onClick={handleOpenModal}>
-        <i className="fas fa-video" style={{ marginRight: '8px' }}></i>
-        Schedule a Call
-      </div>
+     <div className="schedule-call-button" onClick={handleOpenModal}>
+  <i className="fas fa-video" style={{ marginRight: '8px' }}></i>
+  <span className="text">Schedule a Call</span>
+</div>
 
       {showModal && (
         <div className="modal-overlay" onClick={handleCloseModal}>

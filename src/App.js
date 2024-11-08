@@ -166,9 +166,9 @@ function App() {
           <Route path="/toAdd" element={<AddProductForm />} />
         </Routes>
         <div className="button-container">
-          <ScheduleCallButton /> {/* Popin buttons for video call and scheduling */}
-          <FloatingWhatsAppButton /> {/* Add the floating button component */}
-        </div>
+      <ScheduleCallButton/>
+      <FloatingWhatsAppButton/>
+    </div>
       </Router>
     </div>
   );

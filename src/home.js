@@ -289,44 +289,41 @@ export default function JewelryShop() {
 
 
       <div className="container py-5 mb-4" id="testimonials">
-        <h2 className="text-center mb-4 animate__animated animate__fadeInLeft" style={{ color: 'teal' }}>
-          Locate Us   </h2>
-        <div className="row">
-          <div className="col-md-4 text-center">
-            <h4><b>Saaral Jewellery</b></h4>
+  <h2 className="text-center mb-4 animate__animated animate__fadeInLeft" style={{ color: 'teal' }}>
+    Locate Us
+  </h2>
+  <div className="row">
+    <div className="col-md-4 col-12 text-center mb-4">
+      <h4><b>Saaral Jewellery</b></h4>
+      <a className="btn-floating mb-4" style={{ color: 'teal' }}>
+        <i className="fas fa-map-marker-alt"></i>
+      </a>
+      <p>A385/101, Jayakumar Plaza, Saradha College Road</p>
+      <p>Alagapuram, Salem, India, TamilNadu</p>
+      <p>+91 8667839474</p>
+      <a className="btn-floating mb-4" style={{ color: 'teal' }} href="mailto:info@saaraljewellery.com">
+        <i className="fas fa-envelope"></i>
+      </a>
+      <p><a href="mailto:info@saaraljewellery.com">saaraljewellery@gmail.com</a></p>
+    </div>
 
-            <a className="btn-floating mb-4" style={{ color: 'teal' }}>
-              <i className="fas fa-map-marker-alt"></i>
-            </a>
-            <p>A385/101, Jayakumar Plaza, Saradha College Road</p>
-            <p>Alagapuram, Salem, India, TamilNadu</p>
-            <p>+91 8667839474</p>
-            <a className="btn-floating mb-4" style={{ color: 'teal' }} href="mailto:info@saaraljewellery.com">
-              <i className="fas fa-envelope"></i>
-            </a>
-            <p><a href="mailto:info@saaraljewellery.com">saaraljewellery@gmail.com</a></p>
-          </div>
+    {/* Map */}
+    <div className="col-md-8 col-12">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3907.245842939958!2d78.13843267481901!3d11.676981488531906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3babf13f55b9d9cd%3A0xf98b2b1d1e6f5659!2sSAARAL%20JEWELLERY!5e0!3m2!1sen!2sus!4v1726649895710!5m2!1sen!2sus"
+        style={{
+          width: "100%",
+          height: "300px",
+          border: '0',
+        }}
+        allowFullScreen=""
+        aria-hidden="false"
+        tabIndex="0"
+      ></iframe>
+    </div>
+  </div>
+</div>
 
-          {/* Map */}
-          <div className="col-md-8">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3907.245842939958!2d78.13843267481901!3d11.676981488531906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3babf13f55b9d9cd%3A0xf98b2b1d1e6f5659!2sSAARAL%20JEWELLERY!5e0!3m2!1sen!2sus!4v1726649895710!5m2!1sen!2sus"
-                style={{
-                width: "850px",
-              height: "300px",
-              border: '0',
-              position: 'absolute',
-                 
-              }}
-              allowFullScreen=""
-              aria-hidden="false"
-              tabIndex="0"
-             ></iframe>
-           
-          </div>
-
-        </div>
-      </div>
 
 
       <footer className="text-white text-center py-4 animate__animated animate__fadeInUp" id="contact" style={{ backgroundColor: tealColor, marginTop: '190px' }}>
