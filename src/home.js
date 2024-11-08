@@ -204,7 +204,24 @@ export default function JewelryShop() {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-
+      <div className="container py-5 text-center" style={{ backgroundColor: '#f4f4f4' }}>
+    <div className="scrolling-message">
+      <h1 style={{ 
+        fontSize: '4rem', 
+        color: '#009688', 
+        fontWeight: 'bold', 
+        textTransform: 'uppercase',
+        margin: 0,
+        whiteSpace: 'nowrap',
+      }}>
+        925 Elite Silver Jewellery
+      </h1>
+      <p style={{ fontSize: '1.5rem', color: '#343a40', marginTop: '1rem' }}>
+      Discover the exquisite craftsmanship and timeless designs of our 925 Elite Silver Collection.
+    </p>
+    </div>
+    
+  </div>
       {/* Main Content */}
       <div className="container py-5" id="collection">
         <div className="text-center mb-4 animate__animated animate__fadeInUp">
@@ -294,17 +311,27 @@ export default function JewelryShop() {
   </h2>
   <div className="row">
     <div className="col-md-4 col-12 text-center mb-4">
-      <h4><b>Saaral Jewellery</b></h4>
+    <a className="btn-floating mb-4" style={{ color: 'teal' }}>
+    <i className="fab fa-brand"><span>Saaral Jewellery </span></i>
+      </a>
+<br/>
       <a className="btn-floating mb-4" style={{ color: 'teal' }}>
-        <i className="fas fa-map-marker-alt"></i>
+        <i className="fas fa-map-marker-alt"style={{ color: 'teal' }}></i>
       </a>
       <p>A385/101, Jayakumar Plaza, Saradha College Road</p>
       <p>Alagapuram, Salem, India, TamilNadu</p>
-      <p>+91 8667839474</p>
+      <p>+91 8438231686</p>
       <a className="btn-floating mb-4" style={{ color: 'teal' }} href="mailto:info@saaraljewellery.com">
         <i className="fas fa-envelope"></i>
       </a>
       <p><a href="mailto:info@saaraljewellery.com">saaraljewellery@gmail.com</a></p>
+     
+    <a className="btn-floating mb-4" style={{ color: 'teal' }} href="https://www.instagram.com/saaral_jewellery/?igsh=cmplbmRpbjEyM2x0">
+    <i className="fab fa-instagram"></i>
+      </a>
+    <p><span>Instagram </span></p>
+
+
     </div>
 
     {/* Map */}

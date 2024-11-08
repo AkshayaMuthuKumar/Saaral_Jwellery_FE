@@ -203,7 +203,7 @@ footer {
 }
 
 .nav-icon-label .label {
-  font-size: 12px;
+  font-size: 16px;
   color: #000;
   margin-top: 3px;
 }
@@ -220,3 +220,50 @@ footer {
     display: none;
   }
 }
+.navbar-toggler {
+  background-color: black !important;  /* Black color for the toggle button */
+}
+@media (max-width: 768px) {
+  .nav-align-mobile {
+    text-align: left;
+  }
+
+  .navbar-collapse .nav-icon-label,
+  .navbar-collapse .nav-link {
+    text-align: left;
+    margin-left: 0 !important; /* Remove right margin */
+  }
+
+  .nav-icon-label .label {
+    display: block;
+    margin-left: 0px;
+    padding: 10px;
+
+  }
+  .single-line {
+    flex-direction: row;
+  }
+ 
+}
+.form-control {
+  position: relative;
+  z-index: 1;
+}
+
+.scrolling-message {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+  animation: scroll-left 20s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+

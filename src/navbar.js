@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Nav, Badge, NavDropdown, Button, Modal, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Navbar, Nav, Badge, NavDropdown, Row, Col, Button, Modal, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -7,7 +8,7 @@ import '../src/style.css';
 import axios from 'axios';
 import API_URL from './config';
 
-export default function CustomNavbar({ userId, setCartItems, setCartCount, cartItems = [], cartCount }) {
+export default function CustomNavbar({ selectedSubcategory, userId, setCartItems, setCartCount, cartItems = [], cartCount }) {
   const tealColor = '#009688';
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
@@ -17,7 +18,39 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
   const [signupData, setSignupData] = useState({ name: '', email: '', password: '' });
   const [userName, setUserName] = useState('');
   const [isAdmin, setIsAdmin] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [maincategories, setMainCategories] = useState([]);
+  const [occasions, setOccasions] = useState([]);
+  const [categoryCounts, setCategoryCounts] = useState([]);
+  const [occasionCount, setOccasionCount] = useState([]);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/jewelry/${searchQuery.toLowerCase()}`);
 
+      setSearchQuery(''); // Clear search after navigating
+    }
+  };
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoryResponse = await fetch(`${API_URL}/products/categories`);
+        const categoryData = await categoryResponse.json();
+        setMainCategories(categoryData.categories.map(category => category.category_name));
+
+        const occasionResponse = await fetch(`${API_URL}/products/getOccasions`);
+        const occasionData = await occasionResponse.json();
+        setOccasions(occasionData.occasions.map(occasion => occasion.name));
+        setOccasionCount(occasionData.occasions.map(occasion => parseInt(occasion.productCount, 10)));
+
+        
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, [selectedSubcategory]);
   const navbarStyle = {
     backgroundColor: 'white',
     padding: '0.5rem 1rem',
@@ -147,31 +180,89 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
 
   return (
     <>
+
       <Navbar variant="dark" expand="lg" fixed="top" style={navbarStyle}>
+
   <div className="container mt-1" style={{ marginBottom: "0px" }}>
     <Navbar.Brand onClick={() => navigate('/Saaral_Jwellery_FE')} className="text-dark" style={{ cursor: 'pointer' }}>
       <img src="images/logo.jpg" alt="loading" style={{ height: '55px', marginRight: '10px', borderRadius: '50%', marginTop: '0px' }} />
     </Navbar.Brand>
+
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav">
+
+    <Navbar.Collapse id="basic-navbar-nav" className="nav-align-mobile">
       <Nav className="ms-auto mt-2">
-        {categories.map(category => (
-          <NavDropdown
-            key={category.category_name}
-            title={<span style={{ color: '#000', fontSize: '16px' }}>{category.category_name}</span>}
-            id={`${category.category_name}-dropdown`}
-            className="me-3"
-          >
-            <NavDropdown.Item style={{ textAlign: 'center', fontWeight: 'bold' }}>Jewels</NavDropdown.Item>
-            <NavDropdown.Divider />
-            {category.subcategories.map(subcategory => (
-              <NavDropdown.Item key={subcategory} onClick={() => handleSubcategoryClick(category.category_name, subcategory)}>
-                {subcategory}
-              </NavDropdown.Item>
-            ))}
+     
+ <NavDropdown 
+          
+          title={
+            <div className="nav-icon-label single-line" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <i className="fas fa-bars" style={{ color: tealColor }}></i>
+            <span className="label">Categories</span>
+          </div>
+        } 
+          id="categories-dropdown">
+            {maincategories.length > 0 ? (
+              maincategories.map((category, index) => (
+                <NavDropdown.Item key={category} onClick={() => navigate(`/jewelry/${category}`)}>
+                  {category}
+                </NavDropdown.Item>
+              ))
+            ) : (
+              <NavDropdown.Item>No categories available</NavDropdown.Item>
+            )}
           </NavDropdown>
-        ))}
-        {/* Home icon with label */}
+
+          <NavDropdown
+            title={
+              <div className="nav-icon-label single-line" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <i className="fas fa-cubes" style={{ color: tealColor }}></i>
+              <span className="label">Our collections</span>
+            </div>
+          } 
+            id="our-collection-dropdown"
+            className="me-3"
+            
+          >
+            <div className="container" style={{ width: '1500px', minWidth: '1500px'}}>
+              <Row className="justify-content-start">
+                {categories.map(category => (
+                  <Col
+                    key={category.category_name}
+                    style={{ padding: '10px', display: 'flex', flexDirection: 'column' }}
+                  >
+                    <div style={{ fontWeight: 'bold', textAlign: 'center' }}>
+                      {category.category_name}
+                    </div>
+                    <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+                      {category.subcategories.map(subcategory => (
+                        <li
+                          key={subcategory}
+                          onClick={() => handleSubcategoryClick(category.category_name, subcategory)}
+                          style={{ textAlign: 'center', cursor: 'pointer', padding: '5px 0' }}
+                        >
+                          {subcategory}
+                        </li>
+                      ))}
+                    </ul>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </NavDropdown>
+
+          <Form className="d-none d-md-flex w-50 h-50 mt-3" onSubmit={handleSearch}>
+  <Form.Control
+    type="text"
+    placeholder="Search products..."
+    className="me-2"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+  <Button variant="outline-secondary" type="submit">
+    <FaSearch />
+  </Button>
+</Form>
         <Nav.Link className="text-dark me-3" onClick={() => navigate('/Saaral_Jwellery_FE')} style={{ cursor: 'pointer' }}>
           <div className="nav-icon-label">
             <i className="fas fa-home" style={{ color: tealColor }}></i>
@@ -232,6 +323,7 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
                 <div className="label">Logout</div>
               </div>
             </Nav.Link>
+           
           </>
         ) : (
           <>
@@ -249,10 +341,14 @@ export default function CustomNavbar({ userId, setCartItems, setCartCount, cartI
             </Nav.Link>
           </>
         )}
+       
       </Nav>
     </Navbar.Collapse>
   </div>
+
+  
 </Navbar>
+
 
 
       {/* Login Modal */}

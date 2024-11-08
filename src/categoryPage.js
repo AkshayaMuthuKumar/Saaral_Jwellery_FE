@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from './sidebar';
 import API_URL from './config';
@@ -7,6 +7,8 @@ import API_URL from './config';
 const CategoryPage = ({ addToCart, cartCount }) => {
   const { category, subcategory } = useParams();
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current location to read the search query
+
   const [products, setProducts] = useState([]);
   const [selectedPriceRange, setSelectedPriceRange] = useState('all');
   const [selectedSize, setSelectedSize] = useState(null);
@@ -16,6 +18,8 @@ const CategoryPage = ({ addToCart, cartCount }) => {
   const itemsPerPage = 9;
   const tealColor = '#009688';
   const selectedFilterColor = '#FFC107'; // Color for selected filters
+  const searchParams = new URLSearchParams(location.search);
+  const searchQuery = searchParams.get('query'); // Get the search query parameter
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,6 +35,9 @@ const CategoryPage = ({ addToCart, cartCount }) => {
         if (selectedOccasion) {
           apiUrl += `&occasion=${selectedOccasion}`;
         }
+        if (searchQuery) { // If there is a search query, add it to the API request
+          apiUrl += `&search=${searchQuery}`;
+        }
 
         const response = await fetch(apiUrl);
         const data = await response.json();
@@ -42,7 +49,7 @@ const CategoryPage = ({ addToCart, cartCount }) => {
     };
 
     fetchProducts();
-  }, [category, subcategory, currentPage, selectedPriceRange, selectedSize, selectedOccasion]);
+  }, [category, subcategory, currentPage, selectedPriceRange, selectedSize, selectedOccasion, searchQuery]);
 
   const handlePriceFilterChange = (range) => {
     setSelectedPriceRange(range);
@@ -59,16 +66,21 @@ const CategoryPage = ({ addToCart, cartCount }) => {
     setCurrentPage(1);
   };
 
+ 
+
   return (
     <div className="container py-5 m-5">
-      <div className="row">
+<div className="row">
         <div className="col-md-3">
           <Sidebar
             onPriceFilterChange={handlePriceFilterChange}
             onSizeFilterChange={handleSizeFilterChange}
             onOccasionFilterChange={handleOccasionFilterChange}
+            
           />
+
         </div>
+
         <div className="col-md-9">
           <h2 className="text-center mb-4" style={{ color: tealColor }}>
             <b>{category.toUpperCase()} {subcategory ? ` - ${subcategory.toUpperCase()}` : ''}</b>

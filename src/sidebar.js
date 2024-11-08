@@ -19,7 +19,9 @@ const Sidebar = ({ onPriceFilterChange, onSizeFilterChange, onOccasionFilterChan
   const [categoryCounts, setCategoryCounts] = useState([]); // State to store category counts
 
   const navigate = useNavigate();
-
+  const handlePriceChange = (range) => {
+    if (onPriceFilterChange) onPriceFilterChange(range);
+  };
   // Function for handling size selection
   const handleSizeClick = (size) => {
     const updatedFilters = selectedFilters.sizes[0] === size.size ? [] : [size.size]; // Allow only one size to be selected
