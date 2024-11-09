@@ -1,7 +1,7 @@
 // Sidebar component
 import React, { useState, useEffect } from 'react';
 import { Collapse } from 'react-bootstrap';
-import { FaDollarSign, FaTags, FaGift } from 'react-icons/fa';
+import { FaDollarSign, FaTags, FaGift, FaTimes } from 'react-icons/fa'; // Add close icon
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import API_URL from './config';
@@ -111,9 +111,48 @@ const Sidebar = ({ onPriceFilterChange, onSizeFilterChange, onOccasionFilterChan
     setOpen({ ...open, [section]: !open[section] });
   };
 
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false); // Sidebar visibility state
+
+
+  // Toggle sidebar visibility
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
   return (
-    <div className="p-3 border rounded" style={{ backgroundColor: '#f8f9fa', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-      {/* Price Filter */}
+    <>
+    <button
+    onClick={toggleSidebar}
+    className="btn d-block d-sm-none" // Only visible in mobile view
+    style={{
+      position: 'absolute',
+      top: '80px',
+      right: '10px',
+      zIndex: 9999,
+    }}
+  >
+    {isSidebarVisible ? '' : 'Show Filters'}
+  </button>
+  <div
+        className={`sidebar-container p-3 border rounded ${isSidebarVisible ? 'sidebar-visible' : ''}`}
+        style={{
+          backgroundColor: 'white',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+        }}
+      >
+        {/* Close Button for Mobile View */}
+        <button
+          onClick={toggleSidebar}
+          className="btn btn-danger d-block d-sm-none" // Close button in mobile view
+          style={{
+            position: 'absolute',
+            top: '20px',
+            right: '10px',
+            zIndex: 9999,
+          }}
+        >
+          <FaTimes />
+        </button>
+    {/* Price Filter */}
       <h5 className="mt-4 text-uppercase" onClick={() => toggleCollapse('price')} style={{ cursor: 'pointer' }}>
         <FaDollarSign /> Price
       </h5>
@@ -207,6 +246,7 @@ const Sidebar = ({ onPriceFilterChange, onSizeFilterChange, onOccasionFilterChan
         </div>
       </Collapse>
     </div>
+    </>
   );
 };
 

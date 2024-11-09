@@ -224,46 +224,146 @@ footer {
   background-color: black !important;  /* Black color for the toggle button */
 }
 @media (max-width: 768px) {
-  .nav-align-mobile {
-    text-align: left;
+  /* Align icon and label side by side */
+  .nav-icon-label.single-line {
+    display: flex;
+    flex-direction: row; /* Make icon and label appear in the same row */
+    align-items: center; /* Vertically center them */
+    justify-content: flex-start; /* Align to the left */
   }
 
-  .navbar-collapse .nav-icon-label,
-  .navbar-collapse .nav-link {
-    text-align: left;
-    margin-left: 0 !important; /* Remove right margin */
-  }
-
+  /* Add some space between icon and label */
   .nav-icon-label .label {
-    display: block;
-    margin-left: 0px;
-    padding: 10px;
+    margin-left: 5px; /* Space between icon and label */
+  }
 
+  /* Ensure navbar items are aligned properly in mobile */
+  .navbar-collapse .nav-link {
+    display: flex;
+    align-items: center; /* Align icon and label properly */
+    justify-content: flex-start; /* Left-align */
+    margin-left: 0 !important;
   }
-  .single-line {
-    flex-direction: row;
+
+  .navbar-toggler {
+    background-color: black !important; /* Ensure toggle button is visible */
   }
- 
+
+  .navbar-collapse {
+    text-align: left;
+  }
 }
+
 .form-control {
   position: relative;
   z-index: 1;
 }
 
-.scrolling-message {
-  overflow: hidden;
-  white-space: nowrap;
-  width: 100%;
-  box-sizing: border-box;
-  animation: scroll-left 20s linear infinite;
+@media (max-width: 768px) {
+  #collection h2 {
+    font-size: 1.5rem; /* Smaller font for mobile */
+  }
+  .product-carousel .card-img-top {
+    height: 200px; /* Reduce image height */
+  }
+  .quick-view-btn {
+    font-size: 0.8rem; /* Smaller button text */
+    padding: 8px;
+  }
+}
+@media (max-width: 768px) {
+  .scrolling-message h1 {
+    font-size: 1rem;
+    white-space: normal;
+    padding: 0 5%;
+  }
+  
+  .scrolling-message p {
+    font-size: 1rem;
+    padding: 0 5%;
+  }
 }
 
-@keyframes scroll-left {
-  0% {
-    transform: translateX(100%);
+@media (max-width: 480px) {
+  .scrolling-message h1 {
+    font-size: 1.5rem;
   }
-  100% {
-    transform: translateX(-100%);
+  
+  .scrolling-message p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Ensure nav icon and label are inline in mobile view */
+  .nav-icon-label.single-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;  /* Center items vertically */
+    justify-content: flex-start;  /* Align items to the left */
+  }
+
+  /* Make the container width 100% in mobile */
+  .container {
+    width: 100%;
+    padding: 0;
+  }
+
+  /* Stack the columns vertically on smaller screens */
+  .navbar-collapse .nav-dropdown-menu {
+    display: block;
+  }
+
+  /* Adjust the column width in mobile for categories */
+  .container .col {
+    padding: 10px;
+    width: 100%; /* Full-width for each column in mobile */
+  }
+
+  /* Adjust the list items */
+  .container .col ul {
+    padding-left: 0;
+  }
+
+  .container .col li {
+    padding: 8px 0; /* Add some spacing between subcategories */
+    text-align: left; /* Align text to the left for mobile */
+  }
+}
+
+@media (max-width: 576px) {
+  .nav-icon-label .label {
+    font-size: 14px; /* Smaller font size for mobile screens */
+  }
+
+  .fas.fa-cubes {
+    font-size: 18px; /* Smaller icon size */
+  }
+}
+
+/* For mobile view */
+/* For mobile view */
+@media (max-width: 768px) {
+  .sidebar-container {
+    position: fixed;
+    top: 70px;
+    right: -250px; /* Initially off-screen to the right */
+    transition: right 0.3s ease;
+    width: 250px; /* Adjust width of sidebar */
+  }
+
+  .sidebar-visible {
+    right: 0; /* Slide in the sidebar to the right */
+  }
+}
+
+/* For desktop view */
+@media (min-width: 769px) {
+  .sidebar-container {
+    top: 100px;
+    left: 100px; /* Always positioned on the left side */
+    width: 250px; /* Adjust width of sidebar */
+    transition: none; /* No transition needed on desktop */
   }
 }
 

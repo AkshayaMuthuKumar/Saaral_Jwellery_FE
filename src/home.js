@@ -205,69 +205,95 @@ export default function JewelryShop() {
         </Carousel.Item>
       </Carousel>
       <div className="container py-5 text-center" style={{ backgroundColor: '#f4f4f4' }}>
-    <div className="scrolling-message">
-      <h1 style={{ 
-        fontSize: '4rem', 
-        color: '#009688', 
-        fontWeight: 'bold', 
-        textTransform: 'uppercase',
-        margin: 0,
-        whiteSpace: 'nowrap',
-      }}>
-        925 Elite Silver Jewellery
-      </h1>
-      <p style={{ fontSize: '1.5rem', color: '#343a40', marginTop: '1rem' }}>
-      Discover the exquisite craftsmanship and timeless designs of our 925 Elite Silver Collection.
-    </p>
-    </div>
-    
+
+      <div className="scrolling-message">
+  <h1 style={{
+    fontSize: '3rem',
+    color: '#009688',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    margin: 0,
+    textAlign: 'center',
+    lineHeight: '1.2',
+  }}>
+    925 Elite Silver Jewellery
+  </h1>
+  <p style={{
+    fontSize: '1.3rem',
+    color: '#343a40',
+    marginTop: '1rem',
+    textAlign: 'center',
+    padding: '0 10px',
+  }}>
+    Discover the exquisite craftsmanship and timeless designs of our 925 Elite Silver Collection.
+  </p>
+</div>
+
   </div>
       {/* Main Content */}
       <div className="container py-5" id="collection">
-        <div className="text-center mb-4 animate__animated animate__fadeInUp">
-          <b><h2 style={{ color: tealColor, marginBottom: '1rem' }}>Find Your Sparkle</h2></b>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '2rem' }}>
-            {categories.map((category, index) => (
-              <React.Fragment key={category}>
-                <span
-                  style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: tealColor, margin: '0 5px', cursor: 'pointer' }}
-                  onClick={() => handleCategoryClick(index)} // Center the respective card
-                ></span>
-                <span
-                  style={{ margin: '0 10px', fontSize: '16px', color: 'black', cursor: 'pointer' }}
-                  onClick={() => handleCategoryClick(index)} // Center the respective card
-                >
-                  {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
-                </span>
-              </React.Fragment>
-            ))}
+  <div className="text-center mb-4 animate__animated animate__fadeInUp">
+    <b><h2 style={{ color: tealColor }}>Find Your Sparkle</h2></b>
+    <div className="d-flex flex-wrap justify-content-center align-items-center mt-4">
+      {categories.map((category, index) => (
+        <React.Fragment key={category}>
+          <span
+            style={{
+              width: '10px',
+              height: '10px',
+              borderRadius: '50%',
+              backgroundColor: tealColor,
+              margin: '0 5px',
+              cursor: 'pointer',
+            }}
+            onClick={() => handleCategoryClick(index)}
+          ></span>
+          <span
+            style={{
+              margin: '0 10px',
+              fontSize: '1rem',
+              color: 'black',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+            }}
+            onClick={() => handleCategoryClick(index)}
+          >
+            {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
+          </span>
+        </React.Fragment>
+      ))}
+    </div>
+  </div>
+
+  {/* Product Carousel */}
+  <Slider ref={sliderRef} {...settings} className="product-carousel">
+    {categories.map((category, index) => (
+      <div className="p-2" key={category.name}>
+        <div className="card-container">
+          <div className="card h-100 shadow-sm animate__animated animate__zoomIn">
+            <img
+              src={category.image}
+              alt={`${category.name}`}
+              className="card-img-top"
+              style={{
+                height: '250px',
+                objectFit: 'cover',
+                width: '100%',
+                borderRadius: '8px',
+              }}
+            />
+            <div className="card-body d-flex flex-column">
+              <button className="quick-view-btn" onClick={() => handleQuickView(category.name)}>
+                Quick View
+              </button>
+            </div>
           </div>
         </div>
-
-        {/* Product Carousel */}
-        <Slider ref={sliderRef} {...settings}>
-          {categories.map((category, index) => (
-            <div className="p-2" key={category.name}> {/* Use category.name for the key */}
-              <div className="card-container">
-                <div className="card h-100 shadow-sm animate__animated animate__zoomIn">
-                  <img
-                    src={category.image} // Use the image path from the category data
-                    alt={`${category.name}`} // Use the category name for alt text
-                    className="card-img-top"
-                    style={{ height: '320px', objectFit: 'cover' }}
-                  />
-                  <div className="card-body d-flex flex-column">
-                    <button className="quick-view-btn" onClick={() => handleQuickView(category.name)}>
-                      Quick View
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </Slider>
-
       </div>
+    ))}
+  </Slider>
+</div>
+
 
       {/* About Section */}
       <div className="container py-5 animate__animated animate__fadeIn bg-light" id="about" style={{ height: '653px' }}>

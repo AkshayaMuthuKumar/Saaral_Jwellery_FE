@@ -31,7 +31,7 @@ export default function CustomNavbar({ selectedSubcategory, userId, setCartItems
       setSearchQuery(''); // Clear search after navigating
     }
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,7 +44,7 @@ export default function CustomNavbar({ selectedSubcategory, userId, setCartItems
         setOccasions(occasionData.occasions.map(occasion => occasion.name));
         setOccasionCount(occasionData.occasions.map(occasion => parseInt(occasion.productCount, 10)));
 
-        
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -67,21 +67,21 @@ export default function CustomNavbar({ selectedSubcategory, userId, setCartItems
       }
     };
     fetchCategories();
-  
+
     // Retrieve user and isAdmin from local storage
     const storedUserName = localStorage.getItem('userName');
     const storedIsAdmin = Number(localStorage.getItem('isAdmin')); // Convert to number
-  
+
     if (storedUserName) setUserName(storedUserName);
     if (storedIsAdmin) setIsAdmin(storedIsAdmin);
-  
+
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
     if (storedCartItems) {
       setCartItems(storedCartItems);
       setCartCount(storedCartItems.reduce((count, item) => count + item.quantity, 0));
     }
   }, [userId, setCartItems, setCartCount]);
-  
+
 
   const handleLogin = async () => {
     try {
@@ -90,7 +90,7 @@ export default function CustomNavbar({ selectedSubcategory, userId, setCartItems
       setIsAdmin(response.data.isAdmin);
       localStorage.setItem('userName', response.data.userName);
       localStorage.setItem('isAdmin', response.data.isAdmin.toString()); // Store as string
-  
+      localStorage.setItem('userId', response.data.userId); 
       setShowLoginModal(false);
       window.location.reload();
     } catch (error) {
@@ -98,7 +98,7 @@ export default function CustomNavbar({ selectedSubcategory, userId, setCartItems
       alert('Login failed');
     }
   };
-  
+
 
 
 
@@ -182,172 +182,171 @@ export default function CustomNavbar({ selectedSubcategory, userId, setCartItems
     <>
 
       <Navbar variant="dark" expand="lg" fixed="top" style={navbarStyle}>
+        <div className="container mt-1" style={{ marginBottom: "0px" }}>
+          <Navbar.Brand onClick={() => navigate('/Saaral_Jwellery_FE')} className="text-dark" style={{ cursor: 'pointer' }}>
+            <img src="images/logo.jpg" alt="loading" style={{ height: '55px', marginRight: '10px', borderRadius: '50%', marginTop: '0px' }} />
+          </Navbar.Brand>
 
-  <div className="container mt-1" style={{ marginBottom: "0px" }}>
-    <Navbar.Brand onClick={() => navigate('/Saaral_Jwellery_FE')} className="text-dark" style={{ cursor: 'pointer' }}>
-      <img src="images/logo.jpg" alt="loading" style={{ height: '55px', marginRight: '10px', borderRadius: '50%', marginTop: '0px' }} />
-    </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav" className="nav-align-mobile">
+            <Nav className="ms-auto mt-2">
 
-    <Navbar.Collapse id="basic-navbar-nav" className="nav-align-mobile">
-      <Nav className="ms-auto mt-2">
-     
- <NavDropdown 
-          
-          title={
-            <div className="nav-icon-label single-line" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <i className="fas fa-bars" style={{ color: tealColor }}></i>
-            <span className="label">Categories</span>
-          </div>
-        } 
-          id="categories-dropdown">
-            {maincategories.length > 0 ? (
-              maincategories.map((category, index) => (
-                <NavDropdown.Item key={category} onClick={() => navigate(`/jewelry/${category}`)}>
-                  {category}
-                </NavDropdown.Item>
-              ))
-            ) : (
-              <NavDropdown.Item>No categories available</NavDropdown.Item>
-            )}
-          </NavDropdown>
+              <NavDropdown
 
-          <NavDropdown
-            title={
-              <div className="nav-icon-label single-line" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <i className="fas fa-cubes" style={{ color: tealColor }}></i>
-              <span className="label">Our collections</span>
-            </div>
-          } 
-            id="our-collection-dropdown"
-            className="me-3"
-            
-          >
-            <div className="container" style={{ width: '1500px', minWidth: '1500px'}}>
-              <Row className="justify-content-start">
-                {categories.map(category => (
-                  <Col
-                    key={category.category_name}
-                    style={{ padding: '10px', display: 'flex', flexDirection: 'column' }}
-                  >
-                    <div style={{ fontWeight: 'bold', textAlign: 'center' }}>
-                      {category.category_name}
-                    </div>
-                    <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
-                      {category.subcategories.map(subcategory => (
-                        <li
-                          key={subcategory}
-                          onClick={() => handleSubcategoryClick(category.category_name, subcategory)}
-                          style={{ textAlign: 'center', cursor: 'pointer', padding: '5px 0' }}
-                        >
-                          {subcategory}
-                        </li>
-                      ))}
-                    </ul>
-                  </Col>
-                ))}
-              </Row>
-            </div>
-          </NavDropdown>
-
-          <Form className="d-none d-md-flex w-50 h-50 mt-3" onSubmit={handleSearch}>
-  <Form.Control
-    type="text"
-    placeholder="Search products..."
-    className="me-2"
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-  />
-  <Button variant="outline-secondary" type="submit">
-    <FaSearch />
-  </Button>
-</Form>
-        <Nav.Link className="text-dark me-3" onClick={() => navigate('/Saaral_Jwellery_FE')} style={{ cursor: 'pointer' }}>
-          <div className="nav-icon-label">
-            <i className="fas fa-home" style={{ color: tealColor }}></i>
-            <div className="label">Home</div>
+                title={
+                  <div className="nav-icon-label single-line" >
+                    <i className="fas fa-bars" style={{ color: tealColor }}></i>
+                    <span className="label">Categories</span>
+                  </div>
+                }
+                id="categories-dropdown">
+                {maincategories.length > 0 ? (
+                  maincategories.map((category, index) => (
+                    <NavDropdown.Item key={category} onClick={() => navigate(`/jewelry/${category}`)}>
+                      {category}
+                    </NavDropdown.Item>
+                  ))
+                ) : (
+                  <NavDropdown.Item>No categories available</NavDropdown.Item>
+                )}
+              </NavDropdown>
+              <NavDropdown
+  title={
+    <div className="nav-icon-label single-line">
+      <i className="fas fa-cubes" style={{ color: tealColor }}></i>
+      <span className="label">Our collections</span>
+    </div>
+  }
+  id="our-collection-dropdown"
+  className="me-3"
+>
+  <div className="container" style={{ width: '1000px' }}>
+    <Row className="justify-content-start">
+      {categories.map((category) => (
+        <Col
+          key={category.category_name}
+          xs={12} sm={6} md={4} lg={2} // Responsive grid: adjusts based on screen size
+          style={{ padding: '10px', display: 'flex', flexDirection: 'column' }}
+        >
+          <div style={{ fontWeight: 'bold', textAlign: 'center' }}>
+            {category.category_name}
           </div>
-        </Nav.Link>
-        {/* Collection icon with label */}
-        <Nav.Link href="#collection" className="text-dark me-3" onClick={() => navigate('#collection')} style={{ cursor: 'pointer' }}>
-          <div className="nav-icon-label">
-            <i className="fas fa-gem" style={{ color: tealColor }}></i>
-            <div className="label">Collection</div>
-          </div>
-        </Nav.Link>
-        {/* About icon with label */}
-        <Nav.Link href="#about" className="text-dark me-3" onClick={() => navigate('#about')} style={{ cursor: 'pointer' }}>
-          <div className="nav-icon-label">
-            <i className="fas fa-info-circle" style={{ color: tealColor }}></i>
-            <div className="label">About</div>
-          </div>
-        </Nav.Link>
-        {/* Testimonials icon with label */}
-        <Nav.Link href="#testimonials" className="text-dark me-3" onClick={() => navigate('#testimonials')} style={{ cursor: 'pointer' }}>
-          <div className="nav-icon-label">
-            <i className="fas fa-comment" style={{ color: tealColor }}></i>
-            <div className="label">Testimonials</div>
-          </div>
-        </Nav.Link>
-        {/* Cart icon with label */}
-        <OverlayTrigger placement="bottom" overlay={renderTooltip}>
-          <Nav.Link onClick={() => navigate('/cart')} className="text-dark" style={{ position: 'relative', cursor: 'pointer' }}>
-            <div className="nav-icon-label">
-              <i className="fas fa-shopping-cart" style={{ color: tealColor }}></i>
-              <div className="label">Cart</div>
-            </div>
-            <Badge pill bg="danger" style={{ position: 'absolute', top: '0px', right: '0px' }}>
-              {cartCount > 0 ? cartCount : 0}
-            </Badge>
-          </Nav.Link>
-        </OverlayTrigger>
-        {/* Conditional admin icon with label */}
-        {isAdmin == 1 && (
-          <Nav.Link href="#toAdd" className="text-dark me-3" onClick={() => navigate('/toAdd')} style={{ cursor: 'pointer' }}>
-            <div className="nav-icon-label">
-              <i className="fas fa-add" style={{ color: tealColor }}></i>
-              <div className="label">Add</div>
-            </div>
-          </Nav.Link>
-        )}
-        {/* Login/Logout based on user status */}
-        {userName ? (
-          <>
-            <Nav.Link className="text-dark me-1" style={{ cursor: 'pointer' }}>
-              Welcome, {userName}!
-            </Nav.Link>
-            <Nav.Link className="text-dark me-3" onClick={handleLogout} style={{ cursor: 'pointer' }}>
-              <div className="nav-icon-label">
-                <i className="fas fa-sign-out-alt" style={{ color: tealColor }}></i>
-                <div className="label">Logout</div>
-              </div>
-            </Nav.Link>
-           
-          </>
-        ) : (
-          <>
-            <Nav.Link className="text-dark me-3" onClick={() => setShowLoginModal(true)} style={{ cursor: 'pointer' }}>
-              <div className="nav-icon-label">
-                <i className="fas fa-sign-in-alt" style={{ color: tealColor }}></i>
-                <div className="label">Login</div>
-              </div>
-            </Nav.Link>
-            <Nav.Link className="text-dark me-3" onClick={() => setShowSignupModal(true)} style={{ cursor: 'pointer' }}>
-              <div className="nav-icon-label">
-                <i className="fas fa-user-plus" style={{ color: tealColor }}></i>
-                <div className="label">Signup</div>
-              </div>
-            </Nav.Link>
-          </>
-        )}
-       
-      </Nav>
-    </Navbar.Collapse>
+          <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+            {category.subcategories.map((subcategory) => (
+              <li
+                key={subcategory}
+                onClick={() => handleSubcategoryClick(category.category_name, subcategory)}
+                style={{ textAlign: 'center', cursor: 'pointer', padding: '5px 0' }}
+              >
+                {subcategory}
+              </li>
+            ))}
+          </ul>
+        </Col>
+      ))}
+    </Row>
   </div>
+</NavDropdown>
 
-  
-</Navbar>
+
+              <Form className="d-none d-md-flex w-50 h-50 mt-3" onSubmit={handleSearch}>
+                <Form.Control
+                  type="text"
+                  placeholder="Search products..."
+                  className="me-2"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <Button variant="outline-secondary" type="submit">
+                  <FaSearch />
+                </Button>
+              </Form>
+
+              <Nav.Link className="text-dark me-3" onClick={() => navigate('/Saaral_Jwellery_FE')} style={{ cursor: 'pointer' }}>
+                <div className="nav-icon-label single-line" >
+                  <i className="fas fa-home" style={{ color: tealColor }}></i>
+                  <div className="label">Home</div>
+                </div>
+              </Nav.Link>
+
+              <Nav.Link href="#collection" className="text-dark me-3" onClick={() => navigate('#collection')} style={{ cursor: 'pointer' }}>
+                <div className="nav-icon-label single-line" >
+                  <i className="fas fa-gem" style={{ color: tealColor }}></i>
+                  <div className="label">Collection</div>
+                </div>
+              </Nav.Link>
+              <Nav.Link href="#about" className="text-dark me-3" onClick={() => navigate('#about')} style={{ cursor: 'pointer' }}>
+                <div className="nav-icon-label single-line" >
+                  <i className="fas fa-info-circle" style={{ color: tealColor }}></i>
+                  <div className="label">About</div>
+                </div>
+              </Nav.Link>
+              {/* Testimonials icon with label */}
+              <Nav.Link href="#testimonials" className="text-dark me-3" onClick={() => navigate('#testimonials')} style={{ cursor: 'pointer' }}>
+                <div className="nav-icon-label single-line" >
+                  <i className="fas fa-comment" style={{ color: tealColor }}></i>
+                  <div className="label">Testimonials</div>
+                </div>
+              </Nav.Link>
+              {/* Cart icon with label */}
+              <OverlayTrigger placement="bottom" overlay={renderTooltip}>
+                <Nav.Link onClick={() => navigate('/cart')} className="text-dark" style={{ position: 'relative', cursor: 'pointer' }}>
+                  <div className="nav-icon-label single-line" >
+                    <i className="fas fa-shopping-cart" style={{ color: tealColor }}></i>
+                    <div className="label">Cart</div>
+                  </div>
+                  <Badge pill bg="danger" style={{ position: 'absolute', top: '0px', right: '0px' }}>
+                    {cartCount > 0 ? cartCount : 0}
+                  </Badge>
+                </Nav.Link>
+              </OverlayTrigger>
+              {/* Conditional admin icon with label */}
+              {isAdmin == 1 && (
+                <Nav.Link href="#toAdd" className="text-dark me-3" onClick={() => navigate('/toAdd')} style={{ cursor: 'pointer' }}>
+                  <div className="nav-icon-label single-line" >
+                    <i className="fas fa-add" style={{ color: tealColor }}></i>
+                    <div className="label">Add</div>
+                  </div>
+                </Nav.Link>
+              )}
+              {/* Login/Logout based on user status */}
+              {userName ? (
+                <>
+                  <Nav.Link className="text-dark me-1" style={{ cursor: 'pointer' }}>
+                    Welcome, {userName}!
+                  </Nav.Link>
+                  <Nav.Link className="text-dark me-3" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                    <div className="nav-icon-label single-line" >
+                      <i className="fas fa-sign-out-alt" style={{ color: tealColor }}></i>
+                      <div className="label">Logout</div>
+                    </div>
+                  </Nav.Link>
+
+                </>
+              ) : (
+                <>
+                  <Nav.Link className="text-dark me-3" onClick={() => setShowLoginModal(true)} style={{ cursor: 'pointer' }}>
+                    <div className="nav-icon-label">
+                      <i className="fas fa-sign-in-alt" style={{ color: tealColor }}></i>
+                      <div className="label">Login</div>
+                    </div>
+                  </Nav.Link>
+                  <Nav.Link className="text-dark me-3" onClick={() => setShowSignupModal(true)} style={{ cursor: 'pointer' }}>
+                    <div className="nav-icon-label">
+                      <i className="fas fa-user-plus" style={{ color: tealColor }}></i>
+                      <div className="label">Signup</div>
+                    </div>
+                  </Nav.Link>
+                </>
+              )}
+
+            </Nav>
+          </Navbar.Collapse>
+        </div>
+
+
+      </Navbar>
 
 
 
